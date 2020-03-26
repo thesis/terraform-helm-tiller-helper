@@ -33,15 +33,18 @@ module "your_custom_name_for_your_instance_of_this_module" {
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-<!-- The following Inputs example will be over-written by pre-commit hooks,
-  and is here only as an example in case you opt not to use the hooks. -->
 ## Inputs
 
-Table of available module inputs in the format:
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| tiller\_namespace\_name | The name of the namespace you want tiller to live in. | string | `""` | no |
 
-|Name | Description | Type |Default | Required
---- | --- | --- | --- | --- |
-`inputName`| Description of this input | input type | `default value` | boolean
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| tiller\_namespace | The tiller namespace name. |
+| tiller\_service\_account | The tiller service account name. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
