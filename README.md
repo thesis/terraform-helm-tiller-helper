@@ -9,6 +9,8 @@ account, and permissions for Tiller to run on.
 ## Compatibility
 
 This module is compatible with Terraform `<= 0.12.0`
+This module is compatible with Helm provider version `0.7.0` - it may or may
+not work with higher versions.
 
 <!-- Usage section is required -->
 ## Usage
@@ -27,7 +29,7 @@ module "your_custom_name_for_your_instance_of_this_module" {
 }
 
 provider "helm" {
-  version = "= 0.7.0"
+  version = "= x.y.z"
 
   kubernetes {
     host                   = "url-of-kubernetes-host"
