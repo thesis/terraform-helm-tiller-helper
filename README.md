@@ -2,7 +2,8 @@
 <!-- Module Name and description are required -->
 # Helm Tiller Helper Module
 
-<!-- TODO: Add description -->
+Provides a helper used by the Helm provider, that sets up a namespace, service
+account, and permissions for Tiller to run on.
 
 <!-- Compatibility section is optional -->
 ## Compatibility
@@ -22,16 +23,16 @@ simple usage is as follows:
 ```hcl
 module "your_custom_name_for_your_instance_of_this_module" {
   source                = "git@github.com:thesis/terraform-helm-tiller-helper.git"
-  tiller_namespace_name = "${var.tiller_namespace}"
+  tiller_namespace_name = "your-namespace-for-tiller"
 }
 
 provider "helm" {
   version = "= 0.7.0"
 
   kubernetes {
-    host                   = "https://${var.gke_cluster["master_private_endpoint"]}"
-    token                  = "${data.google_client_config.default.access_token}"
-    cluster_ca_certificate = "${base64decode(module.gke_cluster.cluster_ca_certificate)}"
+    host                   = "url-of-kubernetes-host"
+    token                  = "reference-to-your-client-config-access-token"
+    cluster_ca_certificate = "reference-to-your-cluster-ca-certificate"
   }
 
   tiller_image    = "gcr.io/kubernetes-helm/tiller:v2.11.0"
@@ -41,6 +42,7 @@ provider "helm" {
   install_tiller  = true
 }
 ```
+
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -61,9 +63,13 @@ provider "helm" {
 <!-- Notes section is optional -->
 ## Notes
 
-<!-- Anything quirky about the module folks may want to know about. Relevant
-links or additional useful information.  Format is up to you.
- -->
+Note: The values for Kubernetes `token` and `cluster_ca_certificate` should not
+be stored in plain text in your Terraform config, or commited to source control.
+
+We recommend sourcing the token from your client config data:
+`token                  = "${data.google_client_config.default.access_token}"`
+and decoding the certificate from the associated Kubernetes module's cluster:
+`cluster_ca_certificate` = `${base64decode(module.gke_cluster.cluster_ca_certificate)}`
 
 <!-- License is required -->
 ## License
